@@ -1,0 +1,316 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* Theme Styles */
+body.theme-light {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f7f7f7;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --border-color: #d1d1d1;
+  --accent-color: #007aff;
+
+  mat-drawer-container {
+    background-color: #ffffff !important;
+    overflow-x: hidden !important;
+  }
+
+  mat-drawer {
+    background: linear-gradient(180deg, #f7f7f7 0%, #e8e8e8 100%) !important;
+  }
+}
+
+body.theme-dark {
+  --bg-primary: #1e1e1e;
+  --bg-secondary: #2d2d2d;
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --border-color: #404040;
+  --accent-color: #4a9eff;
+
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+
+  mat-drawer-container {
+    background-color: #1e1e1e !important;
+    overflow-x: hidden !important;
+  }
+
+  mat-drawer {
+    background: linear-gradient(180deg, #2d2d2d 0%, #252525 100%) !important;
+    color: #e0e0e0;
+  }
+
+  mat-drawer-content {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+  }
+
+  .mac-sidebar {
+    background: linear-gradient(180deg, #2d2d2d 0%, #252525 100%) !important;
+    border-right: 1px solid #404040 !important;
+
+    .sidebar-header {
+      background: rgba(40, 40, 40, 0.8) !important;
+      border-bottom: 1px solid #404040 !important;
+      color: #e0e0e0 !important;
+
+      b {
+        color: #e0e0e0 !important;
+      }
+    }
+
+    .nav-section h3 {
+      color: #a0a0a0 !important;
+    }
+
+    .nav-item {
+      color: #e0e0e0 !important;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.08) !important;
+      }
+
+      &.active {
+        background: rgba(74, 158, 255, 0.2) !important;
+        color: #4a9eff !important;
+
+        .nav-icon {
+          color: #4a9eff !important;
+        }
+      }
+    }
+
+    .nav-icon {
+      color: #a0a0a0 !important;
+    }
+  }
+
+  .settings-container {
+    h2, h3 {
+      color: #e0e0e0 !important;
+    }
+
+    .section-description {
+      color: #a0a0a0 !important;
+    }
+  }
+
+  .theme-dropdown-container {
+    .theme-label {
+      color: #e0e0e0 !important;
+    }
+
+    .theme-dropdown {
+      background-color: #2d2d2d !important;
+      color: #e0e0e0 !important;
+      border-color: #404040 !important;
+
+      &:hover {
+        border-color: #4a9eff !important;
+      }
+
+      &:focus {
+        border-color: #4a9eff !important;
+        box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.2) !important;
+      }
+
+      option {
+        background-color: #2d2d2d;
+        color: #e0e0e0;
+      }
+    }
+  }
+
+  .theme-card {
+    background: #2d2d2d !important;
+    border-color: #404040 !important;
+
+    &.selected {
+      background: rgba(74, 158, 255, 0.15) !important;
+      border-color: #4a9eff !important;
+    }
+
+    .theme-info {
+      h4 {
+        color: #e0e0e0 !important;
+      }
+
+      p {
+        color: #a0a0a0 !important;
+      }
+    }
+  }
+
+  // Generic content styling for all pages
+  .roles-container,
+  .permissions-container,
+  .dashboard-container,
+  .events-container,
+  .users-container,
+  mat-drawer-content {
+    h1, h2, h3, h4, h5, h6 {
+      color: #e0e0e0 !important;
+    }
+
+    p, span, div {
+      color: #e0e0e0 !important;
+    }
+
+    label {
+      color: #e0e0e0 !important;
+    }
+  }
+}
+
+body.theme-dracula {
+  --bg-primary: #282a36;
+  --bg-secondary: #44475a;
+  --text-primary: #f8f8f2;
+  --text-secondary: #6272a4;
+  --border-color: #44475a;
+  --accent-color: #bd93f9;
+
+  background-color: #282a36;
+  color: #f8f8f2;
+
+  mat-drawer-container {
+    background-color: #282a36 !important;
+    overflow-x: hidden !important;
+  }
+
+  mat-drawer {
+    background: linear-gradient(180deg, #282a36 0%, #21222c 100%) !important;
+    color: #f8f8f2;
+  }
+
+  mat-drawer-content {
+    background-color: #282a36;
+    color: #f8f8f2;
+  }
+
+  .mac-sidebar {
+    background: linear-gradient(180deg, #282a36 0%, #21222c 100%) !important;
+    border-right: 1px solid #44475a !important;
+
+    .sidebar-header {
+      background: rgba(68, 71, 90, 0.6) !important;
+      border-bottom: 1px solid #44475a !important;
+      color: #f8f8f2 !important;
+
+      b {
+        color: #f8f8f2 !important;
+      }
+    }
+
+    .nav-section h3 {
+      color: #6272a4 !important;
+    }
+
+    .nav-item {
+      color: #f8f8f2 !important;
+
+      &:hover {
+        background: rgba(189, 147, 249, 0.1) !important;
+      }
+
+      &.active {
+        background: rgba(189, 147, 249, 0.2) !important;
+        color: #bd93f9 !important;
+
+        .nav-icon {
+          color: #bd93f9 !important;
+        }
+      }
+    }
+
+    .nav-icon {
+      color: #6272a4 !important;
+    }
+  }
+
+  .settings-container {
+    h2, h3 {
+      color: #f8f8f2 !important;
+    }
+
+    .section-description {
+      color: #6272a4 !important;
+    }
+  }
+
+  .theme-dropdown-container {
+    .theme-label {
+      color: #f8f8f2 !important;
+    }
+
+    .theme-dropdown {
+      background-color: #44475a !important;
+      color: #f8f8f2 !important;
+      border-color: #6272a4 !important;
+
+      &:hover {
+        border-color: #bd93f9 !important;
+      }
+
+      &:focus {
+        border-color: #bd93f9 !important;
+        box-shadow: 0 0 0 3px rgba(189, 147, 249, 0.2) !important;
+      }
+
+      option {
+        background-color: #44475a;
+        color: #f8f8f2;
+      }
+    }
+  }
+
+  .theme-card {
+    background: #44475a !important;
+    border-color: #6272a4 !important;
+
+    &.selected {
+      background: rgba(189, 147, 249, 0.15) !important;
+      border-color: #bd93f9 !important;
+    }
+
+    .theme-info {
+      h4 {
+        color: #f8f8f2 !important;
+      }
+
+      p {
+        color: #6272a4 !important;
+      }
+    }
+  }
+
+  // Generic content styling for all pages
+  .roles-container,
+  .permissions-container,
+  .dashboard-container,
+  .events-container,
+  .users-container,
+  mat-drawer-content {
+    h1, h2, h3, h4, h5, h6 {
+      color: #f8f8f2 !important;
+    }
+
+    p, span, div {
+      color: #f8f8f2 !important;
+    }
+
+    label {
+      color: #f8f8f2 !important;
+    }
+  }
+}

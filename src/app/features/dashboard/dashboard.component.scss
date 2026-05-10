@@ -1,0 +1,124 @@
+// src/app/features/dashboard/dashboard.component.scss
+.dashboard-container {
+  padding: 20px;
+  max-width: 1200px;
+
+  h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #333;
+  }
+}
+
+.dashboard-title {
+  color: var(--text-primary, #1a1a1a);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color, #e0e0e0);
+  padding-bottom: 0.5rem;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+// --- Reusable Grid Styles (Matching Users/Roles/Permissions theme) ---
+.data-grid {
+  margin-top: 20px;
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-primary);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    thead {
+      background: var(--bg-secondary);
+
+      th {
+        padding: 16px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--accent-color);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 2px solid var(--border-color);
+
+        &.data-volume,
+        &.data-revenue,
+        &.data-expenses,
+        &.data-profit {
+          text-align: right;
+        }
+      }
+    }
+
+    tbody {
+      .data-row {
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background: var(--bg-secondary);
+        }
+
+        &:not(:last-child) {
+          border-bottom: 1px solid var(--border-color);
+        }
+
+        td {
+          padding: 16px;
+          font-size: 14px;
+
+          &.data-id {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: var(--accent-color);
+            width: 80px;
+          }
+
+          &.data-name {
+            font-weight: 500;
+            color: var(--text-primary);
+            width: 200px;
+          }
+
+          &.data-volume,
+          &.data-revenue,
+          &.data-expenses,
+          &.data-profit {
+            text-align: right;
+            font-family: 'Segoe UI', sans-serif;
+            color: var(--text-primary);
+          }
+
+          &.data-profit {
+            font-weight: 600;
+            color: var(--accent-color);
+          }
+
+          &.data-notes {
+            color: var(--text-secondary);
+            line-height: 1.4;
+            width: 250px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .data-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}

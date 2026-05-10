@@ -1,0 +1,75 @@
+.permissions-container {
+  padding: 20px;
+
+  h2 {
+    margin: 0 0 16px 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .permissions-grid {
+    margin-top: 20px;
+
+    .permissions-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-primary);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+      thead {
+        background: var(--bg-secondary);
+
+        th {
+          padding: 16px;
+          text-align: left;
+          font-weight: 600;
+          font-size: 14px;
+          color: var(--accent-color);
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          border-bottom: 2px solid var(--border-color);
+        }
+      }
+
+      tbody {
+        .permission-row {
+          transition: background-color 0.2s ease;
+
+          &:hover {
+            background: var(--bg-secondary);
+          }
+
+          &:not(:last-child) {
+            border-bottom: 1px solid var(--border-color);
+          }
+
+          td {
+            padding: 16px;
+            font-size: 14px;
+
+            &.permission-id {
+              font-family: 'Courier New', monospace;
+              font-weight: 600;
+              color: var(--accent-color);
+              width: 120px;
+            }
+
+            &.permission-name {
+              font-weight: 500;
+              color: var(--text-primary);
+              width: 220px;
+            }
+
+            &.permission-description {
+              color: var(--text-secondary);
+              line-height: 1.4;
+            }
+          }
+        }
+      }
+    }
+  }
+}

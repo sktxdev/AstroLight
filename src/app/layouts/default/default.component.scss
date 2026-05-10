@@ -1,0 +1,32 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+mat-drawer {
+    min-width: 150px;
+    max-width: 500px;
+    align-content: flex-start;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+mat-drawer-container {
+    height: 100%;
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+}
+
+mat-drawer-content {
+    padding: 15px;
+}

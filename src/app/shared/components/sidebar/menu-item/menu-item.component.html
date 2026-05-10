@@ -1,0 +1,31 @@
+<a
+  [routerLink]="hasChildren(item) ? null : item.route"
+  (click)="hasChildren(item) ? toggleMenu(getMenuKey(item.label)) : null"
+  routerLinkActive="active"
+  [routerLinkActiveOptions]="{exact: true}"
+  class="nav-item"
+  [class.has-children]="hasChildren(item)"
+  [style.padding-left]="getPaddingLeft()"
+  [style.font-size]="getFontSize()">
+  <mat-icon class="nav-icon" [style.font-size]="getIconSize()" [style.width]="getIconSize()" [style.height]="getIconSize()">{{ item.icon }}</mat-icon>
+  <span class="nav-label">{{ item.label }}</span>
+  @if (hasChildren(item)) {
+    <mat-icon class="expand-icon">
+      {{ isExpanded(getMenuKey(item.label)) ? 'expand_less' : 'expand_more' }}
+    </mat-icon>
+  }
+</a>
+
+@if (hasChildren(item) && isExpanded(getMenuKey(item.label))) {
+  <ul class="submenu-list">
+    @for (child of item.children; track child) {
+      <li>
+        <app-menu-item
+          [item]="child"
+          [level]="level + 1"
+          [path]="getMenuKey(item.label)">
+        </app-menu-item>
+      </li>
+    }
+  </ul>
+}

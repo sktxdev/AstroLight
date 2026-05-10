@@ -1,0 +1,23 @@
+<div class="mac-sidebar">
+  <div class="sidebar-header">
+    <b>Dashboard Application</b>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section">
+      <h3>Navigation</h3>
+      <ul class="nav-list">
+        @for (item of menuItems; track item) {
+          <li>
+            <app-menu-item [item]="item" [level]="0"></app-menu-item>
+          </li>
+        }
+      </ul>
+    </div>
+  </nav>
+
+  <div class="resize-handle"
+    (mousedown)="onResizeHandleMouseDown($event)"
+    [class.resizing]="isResizing">
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="roles-container">
+    <h2>Roles Management</h2>
+
+    <div class="roles-grid">
+        <table class="roles-table">
+            <thead>
+                <tr>
+                    <th>Role ID</th>
+                    <th>Role Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let role of roles" class="role-row">
+                    <td class="role-id">{{ role.roleId }}</td>
+                    <td class="role-name">{{ role.roleName }}</td>
+                    <td class="role-description">{{ role.description }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

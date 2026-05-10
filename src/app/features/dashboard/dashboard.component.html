@@ -1,0 +1,44 @@
+<!-- src/app/features/dashboard/dashboard.component.html -->
+<div class="dashboard-container">
+  <h2 class="dashboard-title">Dashboard - Key Performance Indicators</h2>
+
+    <!-- KPI Section -->
+
+  <div class="kpi-grid">
+    <app-kpi-panel
+      *ngFor="let kpi of kpiData"
+      [data]="kpi">
+    </app-kpi-panel>
+  </div>
+
+  <div style="height: 2rem;"></div>
+
+  <!-- Product Performance Grid -->
+  <h2 class="dashboard-title">Product Performance</h2>
+  <div class="data-grid">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Product Name</th>
+          <th class="data-volume">Sales Volume</th>
+          <th class="data-revenue">Revenue</th>
+          <th class="data-expenses">Expenses</th>
+          <th class="data-profit">Profit</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of productData" class="data-row">
+          <td class="data-id">{{ product.id }}</td>
+          <td class="data-name">{{ product.productName }}</td>
+          <td class="data-volume">{{ product.salesVolume | number }}</td>
+          <td class="data-revenue">{{ product.revenue | currency:'USD':'symbol':'1.0-0' }}</td>
+          <td class="data-expenses">{{ product.expenses | currency:'USD':'symbol':'1.0-0' }}</td>
+          <td class="data-profit">{{ product.profit | currency:'USD':'symbol':'1.0-0' }}</td>
+          <td class="data-notes">{{ product.notes }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
