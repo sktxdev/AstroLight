@@ -6,7 +6,7 @@ import { SidebarComponent } from './sidebar.component';
 describe('SidebarComponent', () => {
   let component: SidebarComponent;
   let fixture: ComponentFixture<SidebarComponent>;
-  const storageKey = 'angularDashboardTemplate.currentNavWidth';
+  const storageKey = 'astrolight.currentNavWidth';
 
   beforeEach(async () => {
     // Clear localStorage before each test
@@ -132,24 +132,17 @@ describe('SidebarComponent', () => {
     const adminMenu = component.menuItems.find(item => item.label === 'Admin');
     expect(adminMenu).toBeDefined();
 
-    const usersMenu = adminMenu?.children?.find((child: any) => child.label === 'Users');
-    expect(usersMenu).toBeDefined();
-
-    const rolesMenu = adminMenu?.children?.find((child: any) => child.label === 'Roles');
-    expect(rolesMenu).toBeDefined();
-
-    const permissionsMenu = adminMenu?.children?.find((child: any) => child.label === 'Permissions');
-    expect(permissionsMenu).toBeDefined();
-
+    const themeMenu = adminMenu?.children?.find((child: any) => child.label === 'Theme');
+    expect(themeMenu).toBeDefined();
   });
 
   it('should support 2 levels of nesting', () => {
     const adminMenu = component.menuItems.find(item => item.label === 'Admin');
     expect(adminMenu?.children).toBeDefined();
 
-    const usersMenu = adminMenu?.children?.find((child: any) => child.label === 'Users');
-    expect(usersMenu).toBeDefined();
-    expect(usersMenu?.children).toBeUndefined();
+    const themeMenu = adminMenu?.children?.find((child: any) => child.label === 'Theme');
+    expect(themeMenu).toBeDefined();
+    expect(themeMenu?.children).toBeUndefined();
   });
 
   it('should have correct menu structure for Events', () => {
@@ -211,22 +204,15 @@ describe('SidebarComponent', () => {
     expect(dashboardMenu?.children?.length).toBe(0);
   });
 
-  it('should have Admin menu with Settings, Roles, Permissions, and Users', () => {
+  it('should have Admin menu with Theme only', () => {
     const adminMenu = component.menuItems.find(item => item.label === 'Admin');
     expect(adminMenu).toBeDefined();
 
-    const settingsMenu = adminMenu?.children?.find((child: any) => child.label === 'Settings');
-    const rolesMenu = adminMenu?.children?.find((child: any) => child.label === 'Roles');
-    const permissionsMenu = adminMenu?.children?.find((child: any) => child.label === 'Permissions');
-    const usersMenu = adminMenu?.children?.find((child: any) => child.label === 'Users');
+    const themeMenu = adminMenu?.children?.find((child: any) => child.label === 'Theme');
 
-    expect(settingsMenu).toBeDefined();
-    expect(settingsMenu?.route).toBe('/admin/settings');
-    expect(rolesMenu).toBeDefined();
-    expect(rolesMenu?.route).toBe('/admin/roles');
-    expect(permissionsMenu).toBeDefined();
-    expect(permissionsMenu?.route).toBe('/admin/permissions');
-    expect(usersMenu).toBeDefined();
+    expect(themeMenu).toBeDefined();
+    expect(themeMenu?.route).toBe('/admin/theme');
+    expect(adminMenu?.children?.length).toBe(1);
   });
 
   it('should maintain width within bounds when dragging left', () => {
@@ -310,11 +296,11 @@ describe('SidebarComponent', () => {
   });
 
   it('should dispatch window resize event when updating sidebar width', () => {
-    spyOn(window, 'dispatchEvent');
+    spyOn(globalThis, 'dispatchEvent');
 
     component['updateSidebarWidth']();
 
-    expect(window.dispatchEvent).toHaveBeenCalledWith(jasmine.any(Event));
+    expect(globalThis.dispatchEvent).toHaveBeenCalledWith(jasmine.any(Event));
   });
 
   it('should store startX and startWidth when starting resize', () => {
@@ -365,23 +351,23 @@ describe('SidebarComponent', () => {
   it('should handle updateSidebarWidth when sidebar element does not exist', () => {
     spyOn(component['elementRef'].nativeElement, 'querySelector').and.returnValue(null);
     spyOn(component['elementRef'].nativeElement, 'closest').and.returnValue(null);
-    spyOn(window, 'dispatchEvent');
+    spyOn(globalThis, 'dispatchEvent');
 
     component['updateSidebarWidth']();
 
-    expect(window.dispatchEvent).toHaveBeenCalled();
+    expect(globalThis.dispatchEvent).toHaveBeenCalled();
   });
 
   it('should handle updateSidebarWidth when drawer element does not exist', () => {
     const mockSidebarElement = document.createElement('div');
     spyOn(component['elementRef'].nativeElement, 'querySelector').and.returnValue(mockSidebarElement);
     spyOn(component['elementRef'].nativeElement, 'closest').and.returnValue(null);
-    spyOn(window, 'dispatchEvent');
+    spyOn(globalThis, 'dispatchEvent');
 
     component['updateSidebarWidth']();
 
     expect(mockSidebarElement.style.width).toBe(`${component.sidebarWidth}px`);
-    expect(window.dispatchEvent).toHaveBeenCalled();
+    expect(globalThis.dispatchEvent).toHaveBeenCalled();
   });
 
   it('should update both sidebar and drawer elements when they exist', () => {
@@ -389,7 +375,7 @@ describe('SidebarComponent', () => {
     const mockDrawerElement = document.createElement('div');
     spyOn(component['elementRef'].nativeElement, 'querySelector').and.returnValue(mockSidebarElement);
     spyOn(component['elementRef'].nativeElement, 'closest').and.returnValue(mockDrawerElement);
-    spyOn(window, 'dispatchEvent');
+    spyOn(globalThis, 'dispatchEvent');
 
     component['updateSidebarWidth']();
 
@@ -397,7 +383,7 @@ describe('SidebarComponent', () => {
     expect(mockDrawerElement.style.width).toBe(`${component.sidebarWidth}px`);
     expect(mockDrawerElement.style.minWidth).toBe(`${component.sidebarWidth}px`);
     expect(mockDrawerElement.style.maxWidth).toBe(`${component.sidebarWidth}px`);
-    expect(window.dispatchEvent).toHaveBeenCalled();
+    expect(globalThis.dispatchEvent).toHaveBeenCalled();
   });
 
   it('should call updateSidebarWidth during ngOnInit', () => {
@@ -462,7 +448,7 @@ describe('SidebarComponent', () => {
   });
 
   it('should have correct private constants', () => {
-    expect(component['STORAGE_KEY']).toBe('angularDashboardTemplate.currentNavWidth');
+    expect(component['STORAGE_KEY']).toBe('astrolight.currentNavWidth');
     expect(component['MIN_WIDTH']).toBe(150);
     expect(component['MAX_WIDTH']).toBe(500);
     expect(component['DEFAULT_WIDTH']).toBe(250);

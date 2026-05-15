@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
-  const storageKey = 'angularDashboardTemplate.selectedTheme';
+  const storageKey = 'astrolight.selectedTheme';
 
   beforeEach(async () => {
     // Clear localStorage before each test

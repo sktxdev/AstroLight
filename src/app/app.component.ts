@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     // Initialize theme on app launch/reload
-    const savedTheme = localStorage.getItem('angularDashboardTemplate.selectedTheme');
+    const savedTheme = localStorage.getItem('astrolight.selectedTheme');
     const themeToApply = savedTheme || 'dracula';
     this.applyTheme(themeToApply);
   }

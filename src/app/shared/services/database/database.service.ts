@@ -1,16 +1,9 @@
 import { Injectable } from '@angular/core';
 import { createRxDatabase, RxDatabase, addRxPlugin, RxCollection } from 'rxdb';
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie';
-import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode';
 import { RxDBQueryBuilderPlugin } from 'rxdb/plugins/query-builder';
 import { RxDBUpdatePlugin } from 'rxdb/plugins/update';
-import { wrappedValidateAjvStorage } from 'rxdb/plugins/validate-ajv';
-import { environment } from '../../../../environments/environment';
 
-// Add plugins in development mode
-if (!environment.production) {
-  addRxPlugin(RxDBDevModePlugin);
-}
 addRxPlugin(RxDBQueryBuilderPlugin);
 addRxPlugin(RxDBUpdatePlugin);
 
@@ -22,9 +15,19 @@ export interface UserDocument {
   updatedAt: number;
 }
 
+export interface ImageDocument {
+  filename: string;
+  dataUrl: string;
+  description: string;
+  uploadedAt: number;
+  fileSize: number;
+  fileType: string;
+}
+
 // Define collections interface
 export interface MyDatabaseCollections {
   users: RxCollection<UserDocument>;
+  images: RxCollection<ImageDocument>;
 }
 
 // Define custom database type
@@ -64,6 +67,43 @@ const userSchema = {
   indexes: ['createdAt', 'email']
 };
 
+const imageSchema = {
+  version: 0,
+  primaryKey: 'filename',
+  type: 'object',
+  properties: {
+    filename: {
+      type: 'string',
+      maxLength: 255
+    },
+    dataUrl: {
+      type: 'string'
+    },
+    description: {
+      type: 'string',
+      maxLength: 500
+    },
+    uploadedAt: {
+      type: 'number',
+      minimum: 0,
+      maximum: Number.MAX_SAFE_INTEGER,
+      multipleOf: 1
+    },
+    fileSize: {
+      type: 'number',
+      minimum: 0,
+      maximum: Number.MAX_SAFE_INTEGER,
+      multipleOf: 1
+    },
+    fileType: {
+      type: 'string',
+      maxLength: 100
+    }
+  },
+  required: ['filename', 'dataUrl', 'description', 'uploadedAt', 'fileSize', 'fileType'],
+  indexes: ['uploadedAt', 'fileType']
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -91,10 +131,9 @@ export class DatabaseService {
     console.log('Initializing RxDB database...');
 
     const db = await createRxDatabase<MyDatabaseCollections>({
-      name: 'angulardashboard',
-      storage: wrappedValidateAjvStorage({
-        storage: getRxStorageDexie()
-      }),
+      name: 'astrolight',
+      // Keep storage CSP-safe for Electron/browser contexts that disallow unsafe-eval.
+      storage: getRxStorageDexie(),
       multiInstance: true,
       eventReduce: true,
       cleanupPolicy: {}
@@ -106,6 +145,9 @@ export class DatabaseService {
     await db.addCollections({
       users: {
         schema: userSchema
+      },
+      images: {
+        schema: imageSchema
       }
     });
 

@@ -14,7 +14,7 @@ import { MenuItemComponent, MenuItem } from './menu-item/menu-item.component';
 ]
 })
 export class SidebarComponent implements OnInit {
-  private readonly STORAGE_KEY = 'angularDashboardTemplate.currentNavWidth';
+  private readonly STORAGE_KEY = 'astrolight.currentNavWidth';
   private readonly MIN_WIDTH = 150;
   private readonly MAX_WIDTH = 500;
   private readonly DEFAULT_WIDTH = 250;
@@ -30,20 +30,9 @@ export class SidebarComponent implements OnInit {
       children: []
     },
     {
-      icon: 'event', label: 'Events', route: '',
+      icon: 'build', label: 'Settings', route: '',
       children: [
-        { icon: 'person', label: 'EventsSubMenu1', route: '/events/submenu1' },
-        { icon: 'person', label: 'EventsSubMenu2', route: '/events/submenu2' },
-        { icon: 'person', label: 'EventsSubMenu3', route: '/events/submenu3' },
-      ]
-    },
-    {
-      icon: 'build', label: 'Admin', route: '',
-      children: [
-        { icon: 'person', label: 'Settings', route: '/admin/settings' },
-        { icon: 'person', label: 'Roles', route: '/admin/roles' },
-        { icon: 'person', label: 'Permissions', route: '/admin/permissions' },
-        { icon: 'person', label: 'Users', route: '/admin/users' },
+        { icon: 'person', label: 'Theme', route: '/admin/theme' },
       ]
     },
     {
@@ -55,13 +44,13 @@ export class SidebarComponent implements OnInit {
     },
   ];
 
-  constructor(private elementRef: ElementRef) { }
+  constructor(private readonly elementRef: ElementRef) { }
 
   ngOnInit(): void {
     // Load saved width from localStorage
     const savedWidth = localStorage.getItem(this.STORAGE_KEY);
     if (savedWidth) {
-      const width = parseInt(savedWidth, 10);
+      const width = Number.parseInt(savedWidth, 10);
       if (width >= this.MIN_WIDTH && width <= this.MAX_WIDTH) {
         this.sidebarWidth = width;
       }
@@ -115,7 +104,7 @@ export class SidebarComponent implements OnInit {
     }
 
     // Trigger a window resize event to make mat-drawer-container recalculate layout
-    window.dispatchEvent(new Event('resize'));
+    globalThis.dispatchEvent(new Event('resize'));
   }
 
 }

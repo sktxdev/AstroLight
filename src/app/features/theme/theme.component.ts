@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss'],
+  selector: 'app-theme',
+  templateUrl: './theme.component.html',
+  styleUrls: ['./theme.component.scss'],
   standalone: true,
   imports: [FormsModule]
 })
-export class SettingsComponent implements OnInit {
+export class ThemeComponent implements OnInit {
   themes = [
     { id: 'light', name: 'Light', description: 'Clean and bright interface' },
     { id: 'dark', name: 'Dark', description: 'Easy on the eyes' },
@@ -22,7 +21,7 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit(): void {
     // Load saved theme from localStorage
-    const savedTheme = localStorage.getItem('angularDashboardTemplate.selectedTheme');
+    const savedTheme = localStorage.getItem('astrolight.selectedTheme');
     if (savedTheme) {
       this.selectedTheme = savedTheme;
     }
@@ -32,7 +31,7 @@ export class SettingsComponent implements OnInit {
   selectTheme(themeId: string): void {
     this.selectedTheme = themeId;
     this.applyTheme(themeId);
-    localStorage.setItem('angularDashboardTemplate.selectedTheme', themeId);
+    localStorage.setItem('astrolight.selectedTheme', themeId);
   }
 
   onThemeChange(event: Event): void {
@@ -46,5 +45,4 @@ export class SettingsComponent implements OnInit {
     // Add selected theme class
     document.body.classList.add(`theme-${themeId}`);
   }
-
 }

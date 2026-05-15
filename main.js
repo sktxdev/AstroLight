@@ -21,13 +21,13 @@ function createWindow() {
   // Development
   mainWindow.loadURL('http://localhost:4200/index.html');
 
-  //mainWindow.loadFile("dist/angulardashboard1/browser/index.html");
+  //mainWindow.loadFile("dist/astrolight/browser/index.html");
 
     // Open the DevTools (optional)
   // mainWindow.webContents.openDevTools();
 
   // Production
-  // mainWindow.loadFile(path.join(__dirname, 'dist/angulardashboard1/browser/index.html'));
+  // mainWindow.loadFile(path.join(__dirname, 'dist/astrolight/browser/index.html'));
 
   mainWindow.on('closed', () => mainWindow = null);
 }

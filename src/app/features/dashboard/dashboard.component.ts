@@ -1,7 +1,10 @@
 // src/app/features/dashboard/dashboard.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { KpiPanelComponent, KpiData } from './kpi-panel/kpi-panel.component';
+import { FormsModule } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { ImageDocument } from '../../shared/services/database/database.service';
+import { ImageService } from '../../shared/services/database/image.service';
 
 export interface ProductPerformance {
   id: string;
@@ -16,70 +19,85 @@ export interface ProductPerformance {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, KpiPanelComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  kpiData: KpiData[] = [];
   productData: ProductPerformance[] = [];
+  storedImages$!: Observable<ImageDocument[]>;
+  selectedFile: File | null = null;
+  selectedFileName = '';
+  selectedFileSize = 0;
+  selectedFileType = '';
+  imageDescription = '';
+  selectedImagePreview = '';
+  uploadError = '';
+  isSavingImage = false;
+
+  constructor(private readonly imageService: ImageService) {}
 
   ngOnInit(): void {
-    this.loadKpiData();
     this.loadProductData();
+    this.storedImages$ = this.imageService.getAllImages$();
   }
 
-  private loadKpiData(): void {
-    this.kpiData = [
-      {
-        title: 'Sales (USD)',
-        value: '125,430',
-        unit: '',
-        trend: { value: 12.5, isPositive: true }
-      },
-      {
-        title: 'Average Uptime',
-        value: '99.9',
-        unit: '%',
-        trend: { value: 0.2, isPositive: true }
-      },
-      {
-        title: 'Outages',
-        value: '3',
-        unit: 'this month',
-        trend: { value: -2, isPositive: true } // Fewer outages is good
-      },
-      {
-        title: 'Backlog of Orders',
-        value: '847',
-        unit: 'orders',
-        trend: { value: -15.3, isPositive: true } // Lower backlog is good
-      },
-      {
-        title: 'Prepaid Orders',
-        value: '1,234',
-        unit: 'orders',
-        trend: { value: 8.7, isPositive: true }
-      },
-      {
-        title: 'Revenue',
-        value: '456,789',
-        unit: 'USD',
-        trend: { value: 5.2, isPositive: true }
-      },
-      {
-        title: 'Customer Satisfaction',
-        value: '4.8',
-        unit: '/5.0',
-        trend: { value: 0.1, isPositive: true }
-      },
-      {
-        title: 'New Users',
-        value: '2,341',
-        unit: 'this week',
-        trend: { value: 18.4, isPositive: true }
-      }
-    ];
+  async onImageSelected(event: Event): Promise<void> {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0] ?? null;
+
+    this.clearUploadState();
+
+    if (!file) {
+      return;
+    }
+
+    if (!file.type.startsWith('image/')) {
+      this.uploadError = 'Please select an image file.';
+      input.value = '';
+      return;
+    }
+
+    this.selectedFile = file;
+    this.selectedFileName = file.name;
+    this.selectedFileSize = file.size;
+    this.selectedFileType = file.type || 'application/octet-stream';
+    this.selectedImagePreview = await this.readFileAsDataUrl(file);
+  }
+
+  async saveImage(): Promise<void> {
+    if (!this.selectedFile) {
+      this.uploadError = 'Select an image before saving.';
+      return;
+    }
+
+    this.isSavingImage = true;
+    this.uploadError = '';
+
+    try {
+      await this.imageService.saveImage(this.selectedFile, {
+        description: this.imageDescription
+      });
+      this.resetImageForm();
+    } catch (error) {
+      console.error('Failed to save image', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      this.uploadError = `Image upload failed: ${errorMessage}`;
+    } finally {
+      this.isSavingImage = false;
+    }
+  }
+
+  formatFileSize(bytes: number): string {
+    if (bytes < 1024) {
+      return `${bytes} B`;
+    }
+
+    if (bytes < 1024 * 1024) {
+      return `${(bytes / 1024).toFixed(1)} KB`;
+    }
+
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   }
 
   private loadProductData(): void {
@@ -114,6 +132,41 @@ export class DashboardComponent implements OnInit {
         profit,
         notes: notesList[index]
       };
+    });
+  }
+
+  private clearUploadState(): void {
+    this.uploadError = '';
+    this.selectedFile = null;
+    this.selectedFileName = '';
+    this.selectedFileSize = 0;
+    this.selectedFileType = '';
+    this.selectedImagePreview = '';
+  }
+
+  private resetImageForm(): void {
+    this.clearUploadState();
+    this.imageDescription = '';
+  }
+
+  private readFileAsDataUrl(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        if (typeof reader.result === 'string') {
+          resolve(reader.result);
+          return;
+        }
+
+        reject(new Error('Unable to generate preview.'));
+      };
+
+      reader.onerror = () => {
+        reject(reader.error ?? new Error('Unable to generate preview.'));
+      };
+
+      reader.readAsDataURL(file);
     });
   }
 }

@@ -24,7 +24,7 @@ describe('DatabaseService', () => {
   it('should initialize database', async () => {
     const db = await service.getDatabase();
     expect(db).toBeTruthy();
-    expect(db.name).toBe('angulardashboard');
+    expect(db.name).toBe('astrolight');
   });
 
   it('should return same database instance on multiple calls', async () => {
@@ -36,6 +36,11 @@ describe('DatabaseService', () => {
   it('should have users collection', async () => {
     const db = await service.getDatabase();
     expect(db.users).toBeTruthy();
+  });
+
+  it('should have images collection', async () => {
+    const db = await service.getDatabase();
+    expect(db.images).toBeTruthy();
   });
 
   it('should destroy database', async () => {
@@ -83,5 +88,22 @@ describe('DatabaseService', () => {
     const schema = (collection.schema as any).jsonSchema;
     expect(schema.indexes).toBeDefined();
     expect(Array.isArray(schema.indexes)).toBe(true);
+  });
+
+  it('should configure image documents with filename as the primary key', async () => {
+    const db = await service.getDatabase();
+    const collection = db.images;
+
+    expect(collection.schema.primaryPath).toBe('filename');
+
+    const schema = (collection.schema as any).jsonSchema;
+    expect(schema.required).toEqual(jasmine.arrayContaining([
+      'filename',
+      'dataUrl',
+      'description',
+      'uploadedAt',
+      'fileSize',
+      'fileType'
+    ]));
   });
 });

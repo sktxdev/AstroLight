@@ -1,22 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SettingsComponent } from './settings.component';
+import { ThemeComponent } from './theme.component';
 
-describe('SettingsComponent', () => {
-  let component: SettingsComponent;
-  let fixture: ComponentFixture<SettingsComponent>;
-  const storageKey = 'angularDashboardTemplate.selectedTheme';
+describe('ThemeComponent', () => {
+  let component: ThemeComponent;
+  let fixture: ComponentFixture<ThemeComponent>;
+  const storageKey = 'astrolight.selectedTheme';
 
   beforeEach(async () => {
     // Clear localStorage before each test
     localStorage.clear();
 
     await TestBed.configureTestingModule({
-      imports: [SettingsComponent]
+      imports: [ThemeComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SettingsComponent);
+    fixture = TestBed.createComponent(ThemeComponent);
     component = fixture.componentInstance;
   });
 

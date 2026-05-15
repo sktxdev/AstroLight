@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/angulardashboard1",
+            "outputPath": "dist/astrolight",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -71,14 +71,14 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "angulardashboard1:build"
+            "buildTarget": "astrolight:build"
           },
           "configurations": {
             "production": {
-              "buildTarget": "angulardashboard1:build:production"
+              "buildTarget": "astrolight:build:production"
             },
             "development": {
-              "buildTarget": "angulardashboard1:build:development"
+              "buildTarget": "astrolight:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -86,7 +86,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "angulardashboard1:build"
+            "buildTarget": "astrolight:build"
           }
         },
         "test": {
