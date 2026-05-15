@@ -29,10 +29,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'Dashboard Demo'`, () => {
+  it(`should have as title 'Astrolight'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('Dashboard Demo');
+    expect(app.title).toEqual('Astrolight');
   });
 
   it('should apply dracula theme by default when no saved theme exists', () => {
