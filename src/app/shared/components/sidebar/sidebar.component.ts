@@ -26,13 +26,13 @@ export class SidebarComponent implements OnInit {
 
   menuItems: MenuItem[] = [
     {
-      icon: 'home', label: 'Dashboard', route: '/',
+      icon: 'home', label: 'My Image Library', route: '/',
       children: []
     },
     {
-      icon: 'build', label: 'Settings', route: '',
+      icon: 'settings', label: 'Settings', route: '',
       children: [
-        { icon: 'person', label: 'Theme', route: '/admin/theme' },
+        { icon: 'person', label: 'Theme', route: '/settings/theme' },
       ]
     },
     {

@@ -177,7 +177,9 @@
   p {
     font-size: 0.78rem;
     font-weight: 600;
-    color: var(--text-secondary, #475569);
+    background: var(--bg-secondary, #f8fafc);
+    border-top: 1px solid var(--border-color, #e2e8f0);
+    color: var(--accent-color, #2563eb);
     margin: 0;
     overflow: hidden;
     padding: 0.45rem 0.5rem;

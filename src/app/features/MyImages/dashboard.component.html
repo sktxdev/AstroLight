@@ -5,7 +5,7 @@
   <section class="image-upload-section">
     <div class="image-upload-card">
       <div class="upload-field">
-        <label for="dashboard-image">Open New Image file</label>
+        <label for="dashboard-image">Open Image file</label>
         <input
           id="dashboard-image"
           type="file"
@@ -46,9 +46,8 @@
     <div class="image-library-card">
       <div class="image-library-header">
         <h3>My Image Library</h3>
-        <p>Saved in IndexedDB database <strong>astrolight</strong> with filename as the key.</p>
       </div>
-
+      <p>Note:All images are saved on your local machine.</p>
       <div class="image-library-grid" *ngIf="storedImages$ | async as storedImages">
         <p class="image-library-empty" *ngIf="storedImages.length === 0">
           No images stored yet.
@@ -59,7 +58,7 @@
           *ngFor="let storedEntry of storedImages"
           [attr.title]="'Type: ' + storedEntry.fileType + ' | Size: ' + formatFileSize(storedEntry.fileSize) + ' | Date: ' + (storedEntry.uploadedAt | date:'medium') + (storedEntry.description ? ' | ' + storedEntry.description : '')">
           <img [src]="storedEntry.dataUrl" [alt]="storedEntry.description || storedEntry.filename">
-          <p>{{ storedEntry.filename }}</p>
+          <p class="image-thumb__title">{{ storedEntry.description || storedEntry.filename }}</p>
         </article>
       </div>
     </div>

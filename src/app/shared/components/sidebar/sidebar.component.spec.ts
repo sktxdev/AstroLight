@@ -129,26 +129,20 @@ describe('SidebarComponent', () => {
   });
 
   it('should have nested menu structure', () => {
-    const adminMenu = component.menuItems.find(item => item.label === 'Admin');
-    expect(adminMenu).toBeDefined();
+    const settingsMenu = component.menuItems.find(item => item.label === 'Settings');
+    expect(settingsMenu).toBeDefined();
 
-    const themeMenu = adminMenu?.children?.find((child: any) => child.label === 'Theme');
+    const themeMenu = settingsMenu?.children?.find((child: any) => child.label === 'Theme');
     expect(themeMenu).toBeDefined();
   });
 
   it('should support 2 levels of nesting', () => {
-    const adminMenu = component.menuItems.find(item => item.label === 'Admin');
-    expect(adminMenu?.children).toBeDefined();
+    const settingsMenu = component.menuItems.find(item => item.label === 'Settings');
+    expect(settingsMenu?.children).toBeDefined();
 
-    const themeMenu = adminMenu?.children?.find((child: any) => child.label === 'Theme');
+    const themeMenu = settingsMenu?.children?.find((child: any) => child.label === 'Theme');
     expect(themeMenu).toBeDefined();
     expect(themeMenu?.children).toBeUndefined();
-  });
-
-  it('should have correct menu structure for Events', () => {
-    const eventsMenu = component.menuItems.find(item => item.label === 'Events');
-    expect(eventsMenu).toBeDefined();
-    expect(eventsMenu?.children?.length).toBe(3);
   });
 
   it('should have correct menu structure for About', () => {
@@ -197,22 +191,22 @@ describe('SidebarComponent', () => {
     expect(event.preventDefault).toHaveBeenCalled();
   });
 
-  it('should have Dashboard menu item with empty children', () => {
-    const dashboardMenu = component.menuItems.find(item => item.label === 'Dashboard');
-    expect(dashboardMenu).toBeDefined();
-    expect(dashboardMenu?.route).toBe('/');
-    expect(dashboardMenu?.children?.length).toBe(0);
+  it('should have My Image Library menu item with empty children', () => {
+    const imageLibraryMenu = component.menuItems.find(item => item.label === 'My Image Library');
+    expect(imageLibraryMenu).toBeDefined();
+    expect(imageLibraryMenu?.route).toBe('/');
+    expect(imageLibraryMenu?.children?.length).toBe(0);
   });
 
-  it('should have Admin menu with Theme only', () => {
-    const adminMenu = component.menuItems.find(item => item.label === 'Admin');
-    expect(adminMenu).toBeDefined();
+  it('should have Settings menu with Theme only', () => {
+    const settingsMenu = component.menuItems.find(item => item.label === 'Settings');
+    expect(settingsMenu).toBeDefined();
 
-    const themeMenu = adminMenu?.children?.find((child: any) => child.label === 'Theme');
+    const themeMenu = settingsMenu?.children?.find((child: any) => child.label === 'Theme');
 
     expect(themeMenu).toBeDefined();
-    expect(themeMenu?.route).toBe('/admin/theme');
-    expect(adminMenu?.children?.length).toBe(1);
+    expect(themeMenu?.route).toBe('/settings/theme');
+    expect(settingsMenu?.children?.length).toBe(1);
   });
 
   it('should maintain width within bounds when dragging left', () => {
@@ -326,14 +320,12 @@ describe('SidebarComponent', () => {
   });
 
   it('should have correct icon for each menu item', () => {
-    const dashboardMenu = component.menuItems.find(item => item.label === 'Dashboard');
-    const eventsMenu = component.menuItems.find(item => item.label === 'Events');
-    const adminMenu = component.menuItems.find(item => item.label === 'Admin');
+    const imageLibraryMenu = component.menuItems.find(item => item.label === 'My Image Library');
+    const settingsMenu = component.menuItems.find(item => item.label === 'Settings');
     const aboutMenu = component.menuItems.find(item => item.label === 'About');
 
-    expect(dashboardMenu?.icon).toBe('home');
-    expect(eventsMenu?.icon).toBe('event');
-    expect(adminMenu?.icon).toBe('build');
+    expect(imageLibraryMenu?.icon).toBe('home');
+    expect(settingsMenu?.icon).toBe('settings');
     expect(aboutMenu?.icon).toBe('info');
   });
 
