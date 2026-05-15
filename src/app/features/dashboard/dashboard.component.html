@@ -13,6 +13,35 @@
 
   <div style="height: 2rem;"></div>
 
+  <h2 class="dashboard-title">Image Library</h2>
+  <div class="image-upload-controls">
+    <button type="button" class="image-open-button" (click)="fileInput.click()">Open Image</button>
+    <input
+      #fileInput
+      type="file"
+      accept="image/*"
+      (change)="onFileSelected($event)"
+      hidden>
+  </div>
+
+  <div
+    class="image-drop-zone"
+    [class.drag-over]="isDragOver"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)">
+    Drag and drop images here
+  </div>
+
+  <div class="image-gallery" *ngIf="storedImages.length > 0">
+    <div class="image-thumb" *ngFor="let image of storedImages">
+      <img [src]="image.dataUrl" [alt]="image.key">
+      <span>{{ image.key }}</span>
+    </div>
+  </div>
+
+  <div style="height: 2rem;"></div>
+
   <!-- Product Performance Grid -->
   <h2 class="dashboard-title">Product Performance</h2>
   <div class="data-grid">

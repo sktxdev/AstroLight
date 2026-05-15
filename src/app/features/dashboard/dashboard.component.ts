@@ -13,6 +13,11 @@ export interface ProductPerformance {
   notes: string;
 }
 
+interface StoredImage {
+  key: string;
+  dataUrl: string;
+}
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -23,10 +28,44 @@ export interface ProductPerformance {
 export class DashboardComponent implements OnInit {
   kpiData: KpiData[] = [];
   productData: ProductPerformance[] = [];
+  storedImages: StoredImage[] = [];
+  isDragOver = false;
 
   ngOnInit(): void {
     this.loadKpiData();
     this.loadProductData();
+    this.loadStoredImages();
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const files = input.files ? Array.from(input.files) : [];
+
+    if (files.length > 0) {
+      void this.handleFiles(files);
+    }
+
+    input.value = '';
+  }
+
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    this.isDragOver = true;
+  }
+
+  onDragLeave(event: DragEvent): void {
+    event.preventDefault();
+    this.isDragOver = false;
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    this.isDragOver = false;
+
+    const files = event.dataTransfer?.files ? Array.from(event.dataTransfer.files) : [];
+    if (files.length > 0) {
+      void this.handleFiles(files);
+    }
   }
 
   private loadKpiData(): void {
@@ -115,5 +154,55 @@ export class DashboardComponent implements OnInit {
         notes: notesList[index]
       };
     });
+  }
+
+  private async handleFiles(files: File[]): Promise<void> {
+    for (const file of files) {
+      if (!file.type.startsWith('image/')) {
+        continue;
+      }
+
+      try {
+        const dataUrl = await this.readFileAsDataUrl(file);
+        if (dataUrl.startsWith('data:image/')) {
+          localStorage.setItem(file.name, dataUrl);
+        }
+      } catch {
+        continue;
+      }
+    }
+
+    this.loadStoredImages();
+  }
+
+  private readFileAsDataUrl(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        resolve(typeof reader.result === 'string' ? reader.result : '');
+      };
+      reader.onerror = () => {
+        reject(reader.error ?? new Error('Failed to read file'));
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  private loadStoredImages(): void {
+    const images: StoredImage[] = [];
+
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (!key) {
+        continue;
+      }
+
+      const value = localStorage.getItem(key);
+      if (value?.startsWith('data:image/')) {
+        images.push({ key, dataUrl: value });
+      }
+    }
+
+    this.storedImages = images.sort((a, b) => a.key.localeCompare(b.key));
   }
 }
