@@ -18,16 +18,18 @@ function createWindow() {
     }
   });
 
-  // Development
-  mainWindow.loadURL('http://localhost:4200/index.html');
+  const isDev = !app.isPackaged;
 
-  //mainWindow.loadFile("dist/astrolight/browser/index.html");
+  if (isDev) {
+    // Local Angular dev server during development.
+    mainWindow.loadURL('http://localhost:4200/index.html');
+  } else {
+    // Packaged app should load the built Angular files.
+    mainWindow.loadFile(path.join(__dirname, 'dist', 'astrolight', 'browser', 'index.html'));
+  }
 
     // Open the DevTools (optional)
   // mainWindow.webContents.openDevTools();
-
-  // Production
-  // mainWindow.loadFile(path.join(__dirname, 'dist/astrolight/browser/index.html'));
 
   mainWindow.on('closed', () => mainWindow = null);
 }
